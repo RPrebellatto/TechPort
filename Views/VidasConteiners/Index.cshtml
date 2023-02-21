@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TechPort.Models.VidaConteiner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Operações de Containers</h1>
+
+<p>
+    <a asp-action="Create">Criar Operação de Container</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Conteiner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusConteiner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Viagem)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Navio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Etapa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Conteiner.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusConteiner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Viagem.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Viagem.NavioId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etapa)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

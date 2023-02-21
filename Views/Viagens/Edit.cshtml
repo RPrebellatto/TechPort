@@ -1,0 +1,44 @@
+﻿@model TechPort.Models.Viagem
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Editar</h1>
+
+<h4>Viagem</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NavioId" class="control-label"></label>
+                <select asp-for="NavioId" class="form-control" asp-items="ViewBag.NavioId"></select>
+                <span asp-validation-for="NavioId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoViagem" class="control-label"></label>
+                <select asp-for="TipoViagem" class="form-control" asp-items="Html.GetEnumSelectList<TechPort.Models.Enums.TipoViagem>()"></select>
+                <span asp-validation-for="TipoViagem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar à Lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

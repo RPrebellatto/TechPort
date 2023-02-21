@@ -1,0 +1,50 @@
+﻿@model TechPort.Models.VidaConteiner
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Excluir</h1>
+
+<div>
+    <h4>Operações de Containers</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Conteiner)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Conteiner.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusConteiner)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StatusConteiner)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Viagem)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Viagem.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Navio)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Navio)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Etapa)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Etapa)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Excluir" class="btn btn-danger" /> |
+        <a asp-action="Index">Voltar à Lista</a>
+    </form>
+</div>
