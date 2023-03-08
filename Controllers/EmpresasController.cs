@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,14 @@ namespace TechPort.Controllers
             _context = context;
         }
 
+        [Authorize]
         // GET: Empresas
         public async Task<IActionResult> Index()
         {
               return View(await _context.Empresa.ToListAsync());
         }
 
+        [Authorize]
         // GET: Empresas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -43,12 +46,14 @@ namespace TechPort.Controllers
             return View(empresa);
         }
 
+        [Authorize]
         // GET: Empresas/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize]
         // POST: Empresas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -65,6 +70,7 @@ namespace TechPort.Controllers
             return View(empresa);
         }
 
+        [Authorize]
         // GET: Empresas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -81,6 +87,7 @@ namespace TechPort.Controllers
             return View(empresa);
         }
 
+        [Authorize]
         // POST: Empresas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -116,6 +123,7 @@ namespace TechPort.Controllers
             return View(empresa);
         }
 
+        [Authorize]
         // GET: Empresas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -134,6 +142,7 @@ namespace TechPort.Controllers
             return View(empresa);
         }
 
+        [Authorize]
         // POST: Empresas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

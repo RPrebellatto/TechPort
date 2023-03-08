@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TechPort.Data;
 using TechPort.Models;
@@ -17,8 +20,10 @@ namespace TechPort.Controllers
         public VidasConteinersController(ApplicationDbContext context)
         {
             _context = context;
+
         }
 
+        [Authorize]
         // GET: VidasConteiners
         public async Task<IActionResult> Index()
         {
@@ -26,6 +31,7 @@ namespace TechPort.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize]
         // GET: VidasConteiners/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,6 +52,7 @@ namespace TechPort.Controllers
             return View(vidaConteiner);
         }
 
+        [Authorize]
         // GET: VidasConteiners/Create
         public IActionResult Create()
         {
@@ -54,6 +61,7 @@ namespace TechPort.Controllers
             return View();
         }
 
+        [Authorize]
         // POST: VidasConteiners/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -61,11 +69,11 @@ namespace TechPort.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ConteinerId,StatusConteiner,ViagemId,Navio,Etapa")] VidaConteiner vidaConteiner)
         {
-            //var a = new SelectList(_context.Navios, "Id", "Nome", vidaConteiner.Viagem.NavioId);
+            #region Inclui Nome do Navio Diretamente na Coluna
+            var NavioContext = _context.Viagens.Include(v => v.Navio);
+            vidaConteiner.Navio = NavioContext.Where(v => v.Id == vidaConteiner.ViagemId).Select(v => v.Navio.Nome).FirstOrDefault();        
+            #endregion
 
-            
-
-            //vidaConteiner.Navio = vidaConteiner.Viagem.Navio.Nome;
 
             ModelState.Clear();
 
@@ -81,6 +89,7 @@ namespace TechPort.Controllers
             return View(vidaConteiner);
         }
 
+        [Authorize]
         // GET: VidasConteiners/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -99,6 +108,7 @@ namespace TechPort.Controllers
             return View(vidaConteiner);
         }
 
+        [Authorize]
         // POST: VidasConteiners/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -110,6 +120,13 @@ namespace TechPort.Controllers
             {
                 return NotFound();
             }
+
+            #region Inclui Nome do Navio Diretamente na Coluna
+            var NavioContext = _context.Viagens.Include(v => v.Navio);
+            vidaConteiner.Navio = NavioContext.Where(v => v.Id == vidaConteiner.ViagemId).Select(v => v.Navio.Nome).FirstOrDefault();
+            #endregion
+
+            ModelState.Clear();
 
             if (ModelState.IsValid)
             {
@@ -136,6 +153,7 @@ namespace TechPort.Controllers
             return View(vidaConteiner);
         }
 
+        [Authorize]
         // GET: VidasConteiners/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -156,6 +174,7 @@ namespace TechPort.Controllers
             return View(vidaConteiner);
         }
 
+        [Authorize]
         // POST: VidasConteiners/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -170,14 +189,14 @@ namespace TechPort.Controllers
             {
                 _context.VidasConteiner.Remove(vidaConteiner);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool VidaConteinerExists(int id)
         {
-          return _context.VidasConteiner.Any(e => e.Id == id);
+            return _context.VidasConteiner.Any(e => e.Id == id);
         }
     }
 }

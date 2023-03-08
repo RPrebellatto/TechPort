@@ -1,0 +1,29 @@
+﻿@*@page
+@model TechPort.Views.Cadastros.IndexModel
+@{
+}*@
+
+@{
+    ViewData["Title"] = "Cadastros";
+}
+
+<div class="text-center">
+    <h1 class="display-4"><strong>Cadastros</strong></h1>
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+    
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Empresas" asp-action="Index">Empresas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Conteiners" asp-action="Index">Containers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Navios" asp-action="Index">Navios</a>
+            </li>     
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Viagens" asp-action="Index">Viagens</a>
+            </li>     
+    </ul>
+</div>
+</div>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace TechPort.Controllers
             _context = context;
         }
 
+        [Authorize]
         // GET: Viagens
         public async Task<IActionResult> Index()
         {
@@ -26,6 +28,7 @@ namespace TechPort.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize]
         // GET: Viagens/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,6 +48,7 @@ namespace TechPort.Controllers
             return View(viagem);
         }
 
+        [Authorize]
         // GET: Viagens/Create
         public IActionResult Create()
         {
@@ -52,6 +56,7 @@ namespace TechPort.Controllers
             return View();
         }
 
+        [Authorize]
         // POST: Viagens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -70,6 +75,7 @@ namespace TechPort.Controllers
             return View(viagem);
         }
 
+        [Authorize]
         // GET: Viagens/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -87,6 +93,7 @@ namespace TechPort.Controllers
             return View(viagem);
         }
 
+        [Authorize]
         // POST: Viagens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -123,6 +130,7 @@ namespace TechPort.Controllers
             return View(viagem);
         }
 
+        [Authorize]
         // GET: Viagens/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -142,6 +150,7 @@ namespace TechPort.Controllers
             return View(viagem);
         }
 
+        [Authorize]
         // POST: Viagens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

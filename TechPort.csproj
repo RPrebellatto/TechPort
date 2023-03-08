@@ -7,6 +7,7 @@
     <UserSecretsId>aspnet-TechPort-4f0b7004-5df8-4a73-be9a-094a343e978b</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+	<ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>
