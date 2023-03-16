@@ -11,9 +11,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TechPort</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><strong><titulo>TechPort</titulo></strong></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,9 +29,17 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="VidasConteiners" asp-action="Index">Operações de Containers</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Cadastros" asp-action="Index">Cadastros</a>
-                            </li>                          
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Cadastros
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Conteiners" asp-action="Index">Containers</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Navios" asp-action="Index">Navios</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Viagens" asp-action="Index">Viagens</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Empresas" asp-action="Index">Empresas</a></li>
+                                </ul>
+                            </li>                       
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
@@ -42,16 +50,14 @@
             </div>
         </nav>
     </header>
-    <div class="container" >
-        
-    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted text-center">
         <div class="container">
             &copy; 2023 - TechPort - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
         </div>

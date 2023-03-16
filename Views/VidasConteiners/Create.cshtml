@@ -25,11 +25,6 @@
                 <label asp-for="ViagemId" class="control-label"></label>
                 <select asp-for="ViagemId" class ="form-control" asp-items="ViewBag.ViagemId"></select>
             </div>
-            @*<div class="form-group">
-                <label asp-for="Navio" class="control-label"></label>
-                <input asp-for="Navio" class="form-control" />
-                <span asp-validation-for="Navio" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <label asp-for="Etapa" class="control-label"></label>
                 <select asp-for="Etapa" class="form-control" asp-items="Html.GetEnumSelectList<TechPort.Models.Enums.Etapa>()"></select>

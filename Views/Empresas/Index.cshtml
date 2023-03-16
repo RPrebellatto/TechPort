@@ -7,9 +7,9 @@
 <h1>Empresas</h1>
 
 <p>
-    <a asp-action="Create">Criar Empresa</a>
+    @Html.ActionLink("Cadastrar Nova Empresa", "Create", new {id = "" }, new {@class = "btn btn-primary"})
 </p>
-<table class="table">
+<table class="table table-secondary table-striped">
     <thead>
         <tr>
             <th>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Excluir</a>
+                    @Html.ActionLink("Editar", "Edit", new {id = item.Id}, new {@class = "btn btn-outline-primary"})   
+                    @Html.ActionLink("Detalhes", "Details", new {id = item.Id }, new {@class = "btn btn-outline-primary"})   
+                    @Html.ActionLink("Excluir", "Delete", new {id = item.Id}, new {@class = "btn btn-outline-danger"})
             </td>
         </tr>
 }

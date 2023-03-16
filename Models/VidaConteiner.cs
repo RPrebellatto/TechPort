@@ -7,7 +7,7 @@ namespace TechPort.Models
     public class VidaConteiner
     {
         public int Id { get; set; }
-        [Display(Name = "Conteiner")]
+        [Display(Name = "Container")]
         public int ConteinerId { get; set; }
         public Conteiner Conteiner { get; set; }
         [Display(Name = "Status")]
