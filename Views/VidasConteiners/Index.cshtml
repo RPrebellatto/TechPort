@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Criar Nova Operação", "Create", new {id = "" }, new {@class = "btn btn-primary"})
 </p>
-<table class="table table-secondary table-striped">
+<table id="tabela-operacoes-containers" class="table table-secondary table-striped">
     <thead>
         <tr>
             <th>
@@ -31,29 +31,41 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Conteiner.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StatusConteiner)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Viagem.Codigo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Navio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Etapa)
-            </td>
-            <td>
-                    @Html.ActionLink("Editar", "Edit", new {id = item.Id}, new {@class = "btn btn-outline-primary"})   
-                    @Html.ActionLink("Detalhes", "Details", new {id = item.Id }, new {@class = "btn btn-outline-primary"})   
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Conteiner.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusConteiner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Viagem.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Navio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Etapa)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new {id = item.Id}, new {@class = "btn btn-outline-primary"})
+                    @Html.ActionLink("Detalhes", "Details", new {id = item.Id }, new {@class = "btn btn-outline-primary"})
                     @Html.ActionLink("Excluir", "Delete", new {id = item.Id}, new {@class = "btn btn-outline-danger"})
-            </td>
-        </tr>
-}
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tabela-operacoes-containers').DataTable({
+                "language": {
+                    "url":"//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json"
+            }
+            });
+        });
+    </script>
+}
