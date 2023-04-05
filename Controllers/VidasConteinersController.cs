@@ -26,15 +26,25 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: VidasConteiners
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page,String searchString)
         {
 
             var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
             var pageSize = 3; // defina o número de registros exibidos em cada página
 
-            var vidaConteiners = await _context.VidasConteiner.Include(v => v.Conteiner).Include(v => v.Viagem)
-                                                 .ToPagedListAsync(pageNumber, pageSize) as IPagedList<VidaConteiner>;
-            return View(vidaConteiners);
+            var vidaConteiners = _context.VidasConteiner.Include(v => v.Conteiner).Include(v => v.Viagem).AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var filteredVidas = vidaConteiners.Where(v => v.Conteiner.Nome.Contains(searchString));
+                vidaConteiners = filteredVidas;
+            }
+
+            var pagedVidas = await vidaConteiners.ToPagedListAsync(pageNumber, pageSize);
+
+            ViewBag.SearchString = searchString; // Adiciona a string de pesquisa à ViewBag para que ela possa ser exibida na View
+
+            return View(pagedVidas);
         }
 
         [Authorize]

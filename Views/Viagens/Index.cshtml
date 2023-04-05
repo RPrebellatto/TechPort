@@ -9,6 +9,13 @@
 
 <h1>Viagens</h1>
 
+<form asp-controller="Viagens" asp-action="Index">
+    <p>
+        Codigo: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <p>
     @Html.ActionLink("Cadastrar Nova Viagem", "Create", new {id = "" }, new {@class = "btn btn-primary"})
 </p>

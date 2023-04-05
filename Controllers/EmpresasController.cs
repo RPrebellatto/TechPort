@@ -23,12 +23,22 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: Empresas
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, String searchString)
         {
             var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
             var pageSize = 3; // defina o número de registros exibidos em cada página
 
-            return View(await _context.Empresa.ToPagedListAsync(pageNumber, pageSize) as IPagedList<Empresa>);
+            var empresas = from m in _context.Empresa
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                empresas = empresas.Where(s => s.Nome!.Contains(searchString));
+
+                return View(await empresas.ToPagedListAsync(pageNumber, pageSize) as IPagedList<Empresa>);
+            } else { 
+
+            return View(await _context.Empresa.ToPagedListAsync(pageNumber, pageSize) as IPagedList<Empresa>); }
         }
 
         [Authorize]

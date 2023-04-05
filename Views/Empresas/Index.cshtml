@@ -8,6 +8,13 @@
 
 <h1>Empresas</h1>
 
+<form asp-controller="Empresas" asp-action="Index">
+    <p>
+        Nome: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <p>
     @Html.ActionLink("Cadastrar Nova Empresa", "Create", new {id = "" }, new {@class = "btn btn-primary"})
 </p>

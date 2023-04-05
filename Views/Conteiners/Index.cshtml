@@ -8,6 +8,13 @@
 
 <h1>Containers</h1>
 
+<form action="@Url.Action("Index", "Conteiners")" method="get">
+    <p>
+        Nome: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <p>
     @Html.ActionLink("Cadastrar Novo Container", "Create", new {id = "" }, new {@class = "btn btn-primary"})
 </p>

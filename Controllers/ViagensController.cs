@@ -25,14 +25,24 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: Viagens
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, String searchString)
         {
-            var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
-            var pageSize = 3; // defina o número de registros exibidos em cada página
+            var pageNumber = page ?? 1;
+            var pageSize = 3;
 
-            var viagens = await _context.Viagens.Include(v => v.Navio)
-                                                 .ToPagedListAsync(pageNumber, pageSize) as IPagedList<Viagem>; ;
-            return View(viagens);
+            var viagens = _context.Viagens.Include(v => v.Navio).AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var filteredViagens = viagens.Where(v => v.Codigo.Contains(searchString));
+                viagens = filteredViagens;
+            }
+
+            var pagedViagens = await viagens.ToPagedListAsync(pageNumber, pageSize);
+
+            ViewBag.SearchString = searchString; // Adiciona a string de pesquisa à ViewBag para que ela possa ser exibida na View
+
+            return View(pagedViagens);
         }
 
         [Authorize]

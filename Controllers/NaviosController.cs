@@ -23,15 +23,24 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: Navios
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, String searchString)
         {
             var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
             var pageSize = 3; // defina o número de registros exibidos em cada página
 
-            
-            var navios = await _context.Navios.Include(n => n.Empresa)
-                                                 .ToPagedListAsync(pageNumber, pageSize) as IPagedList<Navio>; ;
-            return View(navios);
+            var navios = _context.Navios.Include(v => v.Empresa).AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var filteredNavios = navios.Where(v => v.Nome.Contains(searchString));
+                navios = filteredNavios;
+            }
+
+            var pagedNavios = await navios.ToPagedListAsync(pageNumber, pageSize);
+
+            ViewBag.SearchString = searchString; // Adiciona a string de pesquisa à ViewBag para que ela possa ser exibida na View
+
+            return View(pagedNavios);
         }
 
         [Authorize]

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using X.PagedList;
 using TechPort.Data;
 using TechPort.Models;
+using System.ComponentModel;
 
 namespace TechPort.Controllers
 {
@@ -23,14 +24,24 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: Conteiners
-        public async Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page, String searchString)
         {
             var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
             var pageSize = 3; // defina o número de registros exibidos em cada página
 
-            var conteiners = await _context.Conteiners.Include(c => c.Empresa)
-                                                 .ToPagedListAsync(pageNumber, pageSize) as IPagedList<Conteiner>; 
-            return View(conteiners);
+            var conteiners = _context.Conteiners.Include(v => v.Empresa).AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var filteredConteiners = conteiners.Where(v => v.Nome.Contains(searchString));
+                conteiners = filteredConteiners;
+            }
+            var pagedConteiners = await conteiners.ToPagedListAsync(pageNumber, pageSize);
+
+            ViewBag.SearchString = searchString; // Adiciona a string de pesquisa à ViewBag para que ela possa ser exibida na View
+
+            return View(pagedConteiners);
+
         }
 
         [Authorize]
