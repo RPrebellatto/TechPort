@@ -26,7 +26,7 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: VidasConteiners
-        public async Task<IActionResult> Index(int? page,String searchString)
+        public async Task<IActionResult> Index(int? page,String searchString, String searchString2, String searchString3)
         {
 
             var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
@@ -34,11 +34,48 @@ namespace TechPort.Controllers
 
             var vidaConteiners = _context.VidasConteiner.Include(v => v.Conteiner).Include(v => v.Viagem).AsQueryable();
 
-            if (!String.IsNullOrEmpty(searchString))
+            System.Linq.IQueryable<TechPort.Models.VidaConteiner> filteredVidas;
+
+            if (!String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(searchString2) && !String.IsNullOrEmpty(searchString3))
             {
-                var filteredVidas = vidaConteiners.Where(v => v.Conteiner.Nome.Contains(searchString));
+                 filteredVidas = vidaConteiners.Where(v => v.Conteiner.Nome.Contains(searchString) && v.Navio.Contains(searchString3) && v.Viagem.Codigo.Contains(searchString2));
                 vidaConteiners = filteredVidas;
             }
+            else if (String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(searchString2) && !String.IsNullOrEmpty(searchString3))
+            {
+                 filteredVidas = vidaConteiners.Where(v => v.Navio.Contains(searchString3) && v.Viagem.Codigo.Contains(searchString2));
+                vidaConteiners = filteredVidas;
+            }
+            else if (!String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(searchString2) && !String.IsNullOrEmpty(searchString3))
+            {
+                 filteredVidas = vidaConteiners.Where(v => v.Conteiner.Nome.Contains(searchString) && v.Navio.Contains(searchString3));
+                vidaConteiners = filteredVidas;
+            }
+            else if (!String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(searchString2) && String.IsNullOrEmpty(searchString3))
+            {
+                 filteredVidas = vidaConteiners.Where(v => v.Conteiner.Nome.Contains(searchString) && v.Viagem.Codigo.Contains(searchString2));
+                vidaConteiners = filteredVidas;
+            }
+            else if (!String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(searchString2) && String.IsNullOrEmpty(searchString3))
+            {
+                 filteredVidas = vidaConteiners.Where(v => v.Conteiner.Nome.Contains(searchString));
+                vidaConteiners = filteredVidas;
+
+            }
+            else if (String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(searchString2) && String.IsNullOrEmpty(searchString3))
+            {
+                 filteredVidas = vidaConteiners.Where(v => v.Viagem.Codigo.Contains(searchString2));
+                vidaConteiners = filteredVidas;
+
+            }
+            else if (String.IsNullOrEmpty(searchString) && String.IsNullOrEmpty(searchString2) && !String.IsNullOrEmpty(searchString3))
+            {
+                 filteredVidas = vidaConteiners.Where(v => v.Navio.Contains(searchString3));
+                vidaConteiners = filteredVidas;
+
+            }
+
+            
 
             var pagedVidas = await vidaConteiners.ToPagedListAsync(pageNumber, pageSize);
 
