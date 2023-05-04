@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TechPort.Data;
 
@@ -11,13 +12,14 @@ using TechPort.Data;
 namespace TechPort.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230427173713_motoristafran")]
+    partial class motoristafran
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.15")
+                .HasAnnotation("ProductVersion", "6.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -283,8 +285,8 @@ namespace TechPort.Migrations
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.HasKey("Id");
 
@@ -352,6 +354,9 @@ namespace TechPort.Migrations
                     b.Property<int>("Etapa")
                         .HasColumnType("int");
 
+                    b.Property<int>("MotoristaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Navio")
                         .HasColumnType("nvarchar(max)");
 
@@ -364,6 +369,8 @@ namespace TechPort.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ConteinerId");
+
+                    b.HasIndex("MotoristaId");
 
                     b.HasIndex("ViagemId");
 
@@ -458,11 +465,19 @@ namespace TechPort.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TechPort.Models.Motorista", "Motorista")
+                        .WithMany()
+                        .HasForeignKey("MotoristaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TechPort.Models.Viagem", "Viagem")
                         .WithMany()
                         .HasForeignKey("ViagemId");
 
                     b.Navigation("Conteiner");
+
+                    b.Navigation("Motorista");
 
                     b.Navigation("Viagem");
                 });

@@ -26,6 +26,6 @@ namespace TechPort.Models
         //                      get { return Navio; }           
         //                    }
         public Etapa Etapa {get; set; }
-    
+
     }
 }

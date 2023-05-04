@@ -15,5 +15,6 @@ namespace TechPort.Data
         public DbSet<Viagem>? Viagens { get; set; }
         public DbSet<VidaConteiner>? VidasConteiner { get; set; }
         public DbSet<TechPort.Models.Empresa> Empresa { get; set; }
+        public DbSet<Motorista>? Motorista { get; set; }
     }
 }
