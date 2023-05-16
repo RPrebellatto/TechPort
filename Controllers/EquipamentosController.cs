@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
 using TechPort.Data;
 using TechPort.Models;
 
@@ -21,9 +23,24 @@ namespace TechPort.Controllers
 
         [Authorize]
         // GET: Equipamentos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, String searchString)
         {
-            return View(await _context.Equipamentos.ToListAsync());
+            var pageNumber = page ?? 1; // se o parâmetro page for nulo, use a primeira página como padrão
+            var pageSize = 3; // defina o número de registros exibidos em cada página
+
+            var equipamentos = _context.Equipamentos.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var filteredEquipamentos = equipamentos.Where(v => v.Nome.Contains(searchString));
+                equipamentos = filteredEquipamentos;
+            }
+            var pagedEquipamentos = await equipamentos.ToPagedListAsync(pageNumber, pageSize);
+
+            ViewBag.SearchString = searchString; // Adiciona a string de pesquisa à ViewBag para que ela possa ser exibida na View
+
+            return View(pagedEquipamentos);
+
         }
 
         [Authorize]
