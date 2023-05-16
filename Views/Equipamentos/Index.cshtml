@@ -1,29 +1,49 @@
-@model IEnumerable<TechPort.Models.Equipamento>
+@model X.PagedList.IPagedList<TechPort.Models.Equipamento>
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
 
-
-<h2>Lista de Equipamentos</h2>
-@if (Model.Count == 0)
-{
-    <p>Nenhum equipamento cadastrado.</p>
-}
-else
-{
-    foreach (var equipamento in Model)
-    {
-        <div>
-            <h4>@equipamento.Nome</h4>
-            <p>Tipo: @equipamento.Tipo</p>
-            <p>ID: @equipamento.Id</p>
-            <p>
-                <a asp-action="Details" asp-route-id="@equipamento.Id">Detalhes</a> |
-                <a asp-action="Edit" asp-route-id="@equipamento.Id">Editar</a> |
-                <a asp-action="Delete" asp-route-id="@equipamento.Id">Excluir</a>
-            </p>
-        </div>
-        <hr />
-    }
+@{
+    ViewData["Title"] = "Index";
 }
 
-<div>
-    @Html.Partial("_Pagination", Model)
+<h1>Equipamentos</h1>
+
+<form asp-controller="Equipamentos" asp-action="Index">
+    <p>
+        Nome: <input type="text" name="SearchString" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<p>
+    @Html.ActionLink("Cadastrar Novo Equipamento", "Create", new {id = "" }, new {@class = "btn btn-primary"})
+</p>
+<table class="table table-secondary table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Nome)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new {id = item.Id}, new {@class = "btn btn-outline-primary"})
+                    @Html.ActionLink("Detalhes", "Details", new {id = item.Id }, new {@class = "btn btn-outline-primary"})
+                    @Html.ActionLink("Excluir", "Delete", new {id = item.Id}, new {@class = "btn btn-outline-danger"})
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-center">
+    @(Html.PagedListPager(Model, page => Url.Action("Index", new { page })))
 </div>

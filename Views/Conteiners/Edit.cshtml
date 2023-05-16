@@ -45,7 +45,15 @@
 
 <script>
     jQuery(function ($) {
-        $("#nome").mask('SSSS9999999');
+        $('#nome').mask('SSSS9999999', {
+            'translation': {
+                S: { pattern: /[A-Za-z]/ },
+                0: { pattern: /[0-9]/ }
+            }
+            , onKeyPress: function (value, event) {
+                event.currentTarget.value = value.toUpperCase();
+            }
+        })
     });
 </script>
 
