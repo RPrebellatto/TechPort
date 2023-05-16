@@ -23,7 +23,7 @@ namespace TechPort.Controllers
         // GET: Equipamentos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Equipamento.ToListAsync());
+            return View(await _context.Equipamentos.ToListAsync());
         }
 
         [Authorize]
@@ -35,7 +35,7 @@ namespace TechPort.Controllers
                 return NotFound();
             }
 
-            var equipamento = await _context.Equipamento
+            var equipamento = await _context.Equipamentos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (equipamento == null)
             {
@@ -76,7 +76,7 @@ namespace TechPort.Controllers
                 return NotFound();
             }
 
-            var equipamento = await _context.Equipamento.FindAsync(id);
+            var equipamento = await _context.Equipamentos.FindAsync(id);
             if (equipamento == null)
             {
                 return NotFound();
@@ -127,7 +127,7 @@ namespace TechPort.Controllers
                 return NotFound();
             }
 
-            var equipamento = await _context.Equipamento
+            var equipamento = await _context.Equipamentos
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (equipamento == null)
             {
@@ -143,19 +143,19 @@ namespace TechPort.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var equipamento = await _context.Equipamento.FindAsync(id);
+            var equipamento = await _context.Equipamentos.FindAsync(id);
             if (equipamento != null)
             {
-                _context.Equipamento.Remove(equipamento);
+                _context.Equipamentos.Remove(equipamento);
                 await _context.SaveChangesAsync();
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EquipamentoExists(int id);
+        private bool EquipamentoExists(int id)
         {
-            return _context.Equipamento.Any(e => e.Id == id);
+            return _context.Equipamentos.Any(e => e.Id == id);
         }
     }
 }
