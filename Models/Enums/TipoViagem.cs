@@ -3,8 +3,8 @@
 
     public enum TipoViagem
     {
-        Importacao,
-        Exportacao,
+        Importação,
+        Exportação,
         Transbordo
     }
 }
