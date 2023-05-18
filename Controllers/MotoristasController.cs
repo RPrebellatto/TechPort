@@ -27,7 +27,6 @@ namespace TechPort.Controllers
                           Problem("Entity set 'ApplicationDbContext.Motorista'  is null.");
         }
 
-        //,lmkljjljnljn
 
         // GET: Motoristas/Details/5
         public async Task<IActionResult> Details(int? id)
